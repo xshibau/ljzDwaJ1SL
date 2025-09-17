@@ -315,18 +315,6 @@ local response = KeySystem:Init({
                 Text = "Key Redeemed Successfully",
                 Duration = 5
             })
-		else
-			game.StarterGui:SetCore("SendNotification", {
-                Title = "Aura Hub",
-                Text = "Invalid Key",
-                Duration = 5
-            })
-		end
-	end,
-	GuiParent = game.CoreGui,
-})
-
-if not response or not success then return end
 game.StarterGui:SetCore("SendNotification", {
     Title = "Aura Hub",
     Text = "Success Loading",
@@ -1048,3 +1036,16 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 
 SaveManager:LoadAutoloadConfig()
 
+
+else
+			game.StarterGui:SetCore("SendNotification", {
+                Title = "Aura Hub",
+                Text = "Invalid Key",
+                Duration = 5
+            })
+		end
+	end,
+	GuiParent = game.CoreGui,
+})
+
+if not response or not success then return end
