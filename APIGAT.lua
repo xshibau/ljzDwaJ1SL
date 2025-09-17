@@ -305,8 +305,8 @@ local response = KeySystem:Init({
 	Title="Aura Hub | Key System",
 	Description=nil,
 	Link=copyLink(),
-	Discord="test",
-	SaveKey=false,
+	Discord="https://discord.gg/tSmRH9ZA",
+	SaveKey=true,
 	Verify=function(key)
 		local success = redeemKey(key)
         if success then
@@ -1049,3 +1049,4 @@ else
 })
 
 if not response or not success then return end
+
