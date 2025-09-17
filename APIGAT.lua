@@ -326,7 +326,7 @@ local response = KeySystem:Init({
 	GuiParent = game.CoreGui,
 })
 
-if not response or not KeyValid then return end
+if not response or not success then return end
 game.StarterGui:SetCore("SendNotification", {
     Title = "Aura Hub",
     Text = "Success Loading",
@@ -1047,3 +1047,4 @@ InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
 
 SaveManager:LoadAutoloadConfig()
+
