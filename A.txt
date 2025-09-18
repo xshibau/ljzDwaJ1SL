@@ -371,7 +371,6 @@ elseif ((v197 >= 650) or (SelectMonster == "Galley Captain")) then
     NameMon = "Galley Captain"
     CFrameQ = CFrame.new(5258.2788085938, 38.526931762695, 4050.044921875)
     CFrameMon = CFrame.new(5677.6772460938, 92.786109924316, 4966.6323242188)
-   end
 elseif ((v197 == 700) or (v197 <= 724) or (SelectMonster == "Raider")) then
     Ms = "Raider"
     NameQuest = "Area1Quest"
@@ -840,4 +839,5 @@ function AttackNoCoolDown(v)
             end
         end
     end)
+
 end
