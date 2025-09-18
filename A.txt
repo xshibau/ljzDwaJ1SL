@@ -84,27 +84,27 @@ Farm:NewToggle({
         spawn(function()
             while state do
                 if _G.AutoLevel then
-                    local mobs = workspace.Monsters:GetChildren()
+                    local mobs = workspace.Enemies:GetChildren()
                     local targetMob = nil
                     for _, mob in ipairs(mobs) do
-                        if mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
+                        if mob.Name == NameMon and mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
                             targetMob = mob
                             break
                         end
                     end
                     if targetMob then
-                        targetMob.PrimaryPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                        repeat task.wait(0.5) until targetMob.Humanoid.Health <= 0
+                        targetMob.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                        repeat task.wait(0.5) until not targetMob.Parent or targetMob.Humanoid.Health <= 0
                     end
                 end
                 task.wait(0.5)
             end
         end)
-    end
+    end,
 })
 
 --[[ Farming ]] --
-Section:NewToggle({
+ Section:NewToggle({
     Title = "Auto Level",
     Default = false,
     Callback = function(tr)
@@ -114,7 +114,6 @@ Section:NewToggle({
                 while _G.AutoLevel do
                     task.wait()
                     Level()
-
                     if (not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) 
                         or (game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false)) then
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
@@ -123,10 +122,10 @@ Section:NewToggle({
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
                         end
                     end
-
                     for _, mob in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if mob.Name == NameMon and mob:FindFirstChild("HumanoidRootPart") and mob:FindFirstChild("Humanoid") then
-                            repeat task.wait()
+                            repeat 
+                                task.wait()
                                 local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
                                 hrp.CFrame = mob.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0)
                                 AttackNoCoolDown(mob)
@@ -140,8 +139,8 @@ Section:NewToggle({
             end)
         end
     end,
-})
-Section:NewToggle({
+})  
+  Section:NewToggle({
     Title = "Mob Near",
     Default = false,
     Callback = function(tr)
@@ -840,4 +839,5 @@ function AttackNoCoolDown(v)
     end)
 
 end
+
 
