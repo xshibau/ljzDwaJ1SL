@@ -79,11 +79,21 @@ local Shop = Windows:NewTab({
 	Description = "Shop",
 	Icon = "rbxassetid://7733960981"
 })
+local Raid = Windows:NewTab({
+	Title = "Raid",
+	Description = "Raid Fruit",
+	Icon = "rbxassetid://7733960981"
+})
 local Player = Windows:NewTab({
 	Title = "PvP",
 	Description = "Players Farm",
 	Icon = "rbxassetid://7733960981"
 })
+local Fruit = Windows:NewTab({
+	Title = "Fruit",
+	Description = "Fruit Shop",
+	Icon = "rbxassetid://7733960981"
+}) có 
 local MiscFarm = Windows:NewTab({
 	Title = "Misc Farm",
 	Description = "Misc Farming",
@@ -931,6 +941,7 @@ function AttackNoCoolDown(v)
     end)
 
 end
+
 
 
 
