@@ -105,18 +105,21 @@ Section:NewToggle({
                     end
                     for _, mob in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if mob.Name == NameMon and mob:FindFirstChild("HumanoidRootPart") and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
-                            Tween(mob.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0))
                             repeat 
                                 task.wait(0.1)
-                                local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
-                                hrp.CFrame = CFrame.new(
-                                    mob.HumanoidRootPart.Position.X,
-                                    mob.HumanoidRootPart.Position.Y + 15,
-                                    mob.HumanoidRootPart.Position.Z
-                                )
-                                AttackNoCoolDown(mob)
+                                local hrp = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                                local mobhrp = mob:FindFirstChild("HumanoidRootPart")
+                                if hrp and mobhrp then
+                                    hrp.CFrame = CFrame.new(
+                                        mobhrp.Position.X,
+                                        mobhrp.Position.Y + 15,
+                                        mobhrp.Position.Z
+                                    )
+                                    AttackNoCoolDown(mob)
+                                end
                             until not _G.AutoLevel
                                 or not mob.Parent
+                                or not mob:FindFirstChild("Humanoid")
                                 or mob.Humanoid.Health <= 0
                                 or (not game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible)
                         end
@@ -825,6 +828,7 @@ function AttackNoCoolDown(v)
     end)
 
 end
+
 
 
 
