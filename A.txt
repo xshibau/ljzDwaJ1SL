@@ -51,21 +51,50 @@ local Windows = NothingLibrary.new({
 })
 local TabSettings = Windows:NewTab({
 	Title = "Settings",
-	Description = "",
+	Description = "Settings Farm",
 	Icon = "rbxassetid://7733960981"
 })
+local TabFrame = Windows:NewTab({
+	Title = "Farming",
+	Description = "Farming",
+	Icon = "rbxassetid://7733960981"
+})
+local TabRace = Windows:NewTab({
+	Title = "Race",
+	Description = "Get Race",
+	Icon = "rbxassetid://7733960981"
+})
+local Event = Windows:NewTab({
+	Title = "Event",
+	Description = "Farm Event",
+	Icon = "rbxassetid://7733960981"
+})
+local SeaEvent = Windows:NewTab({
+	Title = "Sea Event",
+	Description = "Hunter Sea",
+	Icon = "rbxassetid://7733960981"
+})
+local Shop = Windows:NewTab({
+	Title = "Shop",
+	Description = "Shop",
+	Icon = "rbxassetid://7733960981"
+})
+local Player = Windows:NewTab({
+	Title = "PvP",
+	Description = "Players Farm",
+	Icon = "rbxassetid://7733960981"
+})
+local MiscFarm = Windows:NewTab({
+	Title = "Misc Farm",
+	Description = "Misc Farming",
+	Icon = "rbxassetid://7733960981"
+})
+--[[ Section ]]--
 
 local Farm = TabSettings:NewSection({
 	Title = "Settings Farm",
 	Icon = "rbxassetid://7743869054",
 	Position = "Left"
-})
-
---[[ Tab Farming ]]--
-local TabFrame = Windows:NewTab({
-	Title = "Famring",
-	Description = "",
-	Icon = "rbxassetid://7733960981"
 })
 
 local Section = TabFrame:NewSection({
@@ -902,6 +931,7 @@ function AttackNoCoolDown(v)
     end)
 
 end
+
 
 
 
