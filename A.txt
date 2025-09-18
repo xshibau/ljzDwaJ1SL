@@ -84,7 +84,7 @@ Farm:NewToggle({
     end,
 })
 
---[[ Farming ]] --
+--[[ Farming ]]--
 Section:NewToggle({
     Title = "Auto Level",
     Default = false,
@@ -96,54 +96,33 @@ Section:NewToggle({
                     task.wait()
                     Level()
 
-                    if (not NameMon) 
-                        or (not game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible) 
-                        or (not string.find(game.Players.LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon)) then
-                        
+                    if (not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) 
+                        or (game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false)) then
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                         Tween(CFrameQ)
-                        if ((CFrameQ.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5) then
+                        if ((CFrameQ.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5) then
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
                         end
                     end
 
-                    local targetMob = nil
                     for _, mob in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if mob.Name == NameMon 
-                            and mob:FindFirstChild("HumanoidRootPart") 
-                            and mob:FindFirstChild("Humanoid") 
-                            and mob.Humanoid.Health > 0 then
-                            targetMob = mob
-                            break
+                        if mob.Name == NameMon and mob:FindFirstChild("HumanoidRootPart") and mob:FindFirstChild("Humanoid") then
+                            repeat task.wait()
+                                local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                                hrp.CFrame = mob.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0)
+                                AttackNoCoolDown(mob)
+                            until not _G.AutoLevel
+                                or not mob.Parent
+                                or mob.Humanoid.Health <= 0
+                                or (game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false)
                         end
-                    end
-
-                    if targetMob then
-                        repeat
-                            task.wait(0.1)
-                            local hrp = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-                            local mobhrp = targetMob:FindFirstChild("HumanoidRootPart")
-                            if hrp and mobhrp then
-                                hrp.CFrame = CFrame.new(
-                                    mobhrp.Position.X,
-                                    mobhrp.Position.Y + 15,
-                                    mobhrp.Position.Z
-                                )
-                                AttackNoCoolDown(targetMob)
-                            end
-                        until not _G.AutoLevel
-                            or not targetMob.Parent
-                            or not targetMob:FindFirstChild("Humanoid")
-                            or targetMob.Humanoid.Health <= 0
-                            or (not game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible)
-                    else
-                        task.wait(0.5)
                     end
                 end
             end)
         end
     end,
 })
+
   Section:NewToggle({
     Title = "Mob Near",
     Default = false,
@@ -843,6 +822,7 @@ function AttackNoCoolDown(v)
     end)
 
 end
+
 
 
 
