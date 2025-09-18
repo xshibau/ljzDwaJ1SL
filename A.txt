@@ -73,7 +73,11 @@ local Section = TabFrame:NewSection({
 	Icon = "rbxassetid://7743869054",
 	Position = "Left"
 })
-
+local ChestFarm = TabFrame:NewSection({
+	Title = "Chest",
+	Icon = "rbxassetid://7743869054",
+	Position = "Right"
+})
 
 
 --[[ Settings Farm ]]--
@@ -123,7 +127,7 @@ Section:NewToggle({
     end,
 })
 
-  Section:NewToggle({
+Section:NewToggle({
     Title = "Mob Near",
     Default = false,
     Callback = function(tr)
@@ -155,7 +159,83 @@ Section:NewToggle({
     end,
 })
 
+--[[ Chest Farming ]]--
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local player = game.Players.LocalPlayer
+local hrp = player.Character:WaitForChild("HumanoidRootPart")
 
+local AutoChest = false
+
+ChestFarm:NewToggle({
+    Title = "Auto Chest (Tween)",
+    Default = false,
+    Callback = function(state)
+        AutoChest = state
+        if AutoChest then
+            task.spawn(function()
+                while AutoChest do
+                    task.wait(0.1)
+                    local chests = {}
+                    for _, obj in pairs(workspace:GetDescendants()) do
+                        if obj.Name:lower():find("chest") then
+                            table.insert(chests, obj)
+                        end
+                    end
+                    for _, chest in pairs(chests) do
+                        if not AutoChest then break end
+                        local targetPos
+                        if chest:IsA("Model") and chest:FindFirstChild("HumanoidRootPart") then
+                            targetPos = chest.HumanoidRootPart.CFrame
+                        elseif chest:IsA("BasePart") then
+                            targetPos = chest.CFrame
+                        end
+                        if targetPos then
+                            local distance = (hrp.Position - targetPos.Position).Magnitude
+                            local tween = TweenService:Create(hrp, TweenInfo.new(distance/300, Enum.EasingStyle.Linear), {CFrame = targetPos})
+                            tween:Play()
+                            tween.Completed:Wait()
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+})
+_G.AutoChest = false
+
+function GetHRP()
+    return game.Players.LocalPlayer.Character.HumanoidRootPart
+end
+
+ChestFarm:NewToggle({
+    Title = "Auto Chest (Bypass)",
+    Default = false,
+    Callback = function(tr)
+        _G.AutoChest = tr
+        if tr then
+            task.spawn(function()
+                while _G.AutoChest do
+                    task.wait(0.1)
+                    local hrp = GetHRP()
+                    for _, obj in pairs(game.Workspace:GetDescendants()) do
+                        if string.find(string.lower(obj.Name), "chest") then
+                            local target
+                            if obj:IsA("Model") and obj:FindFirstChild("HumanoidRootPart") then
+                                target = obj.HumanoidRootPart
+                            elseif obj:IsA("BasePart") then
+                                target = obj
+                            end
+                            if target then
+                                hrp.CFrame = target.CFrame + Vector3.new(0,5,0)
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+})
 
 --[[ Function ]]--
 function Tween(cf)
@@ -822,6 +902,7 @@ function AttackNoCoolDown(v)
     end)
 
 end
+
 
 
 
