@@ -85,7 +85,7 @@ Farm:NewToggle({
 })
 
 --[[ Farming ]] --
- Section:NewToggle({
+Section:NewToggle({
     Title = "Auto Level",
     Default = false,
     Callback = function(tr)
@@ -105,10 +105,15 @@ Farm:NewToggle({
                     end
                     for _, mob in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if mob.Name == NameMon and mob:FindFirstChild("HumanoidRootPart") and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
+                            Tween(mob.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0))
                             repeat 
-                                task.wait()
+                                task.wait(0.1)
                                 local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
-                                Tween(mob.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0))
+                                hrp.CFrame = CFrame.new(
+                                    mob.HumanoidRootPart.Position.X,
+                                    mob.HumanoidRootPart.Position.Y + 15,
+                                    mob.HumanoidRootPart.Position.Z
+                                )
                                 AttackNoCoolDown(mob)
                             until not _G.AutoLevel
                                 or not mob.Parent
@@ -820,6 +825,7 @@ function AttackNoCoolDown(v)
     end)
 
 end
+
 
 
 
