@@ -114,16 +114,16 @@ Farm:NewToggle({
                 while _G.AutoLevel do
                     task.wait()
                     Level()
-                    if (not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) 
-                        or (game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false)) then
+                    if (not NameMon) or (not game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible) 
+                        or (not string.find(game.Players.LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon)) then
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                         Tween(CFrameQ)
-                        if ((CFrameQ.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5) then
+                        if ((CFrameQ.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5) then
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, QuestLv)
                         end
                     end
                     for _, mob in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if mob.Name == NameMon and mob:FindFirstChild("HumanoidRootPart") and mob:FindFirstChild("Humanoid") then
+                        if mob.Name == NameMon and mob:FindFirstChild("HumanoidRootPart") and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
                             repeat 
                                 task.wait()
                                 local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
@@ -132,14 +132,14 @@ Farm:NewToggle({
                             until not _G.AutoLevel
                                 or not mob.Parent
                                 or mob.Humanoid.Health <= 0
-                                or (game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false)
+                                or (not game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible)
                         end
                     end
                 end
             end)
         end
     end,
-})  
+})
   Section:NewToggle({
     Title = "Mob Near",
     Default = false,
@@ -839,5 +839,6 @@ function AttackNoCoolDown(v)
     end)
 
 end
+
 
 
