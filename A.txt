@@ -807,7 +807,6 @@ elseif ((v197 == 2575) or (v197 <= 2599) or (SelectMonster == "Skull Slayer") or
     CFrameQ = CFrame.new(-16665.19140625, 104.59640502929688, 1579.6943359375)
     CFrameMon = CFrame.new(-16811.5703125, 84.625244140625, 1542.235107421875)
     end
-    end
 end
 
 function GetEquippedTool()
@@ -841,3 +840,4 @@ function AttackNoCoolDown(v)
     end)
 
 end
+
