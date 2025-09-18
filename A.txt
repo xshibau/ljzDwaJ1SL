@@ -79,27 +79,8 @@ local Section = TabFrame:NewSection({
 --[[ Settings Farm ]]--
 Farm:NewToggle({
     Title = "Bring Mob",
-    Default = false,
-    Callback = function(state)
-        spawn(function()
-            while state do
-                if _G.AutoLevel then
-                    local mobs = workspace.Enemies:GetChildren()
-                    local targetMob = nil
-                    for _, mob in ipairs(mobs) do
-                        if mob.Name == NameMon and mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
-                            targetMob = mob
-                            break
-                        end
-                    end
-                    if targetMob then
-                        targetMob.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                        repeat task.wait(0.5) until not targetMob.Parent or targetMob.Humanoid.Health <= 0
-                    end
-                end
-                task.wait(0.5)
-            end
-        end)
+    Default = true,
+    Callback = function(state)   
     end,
 })
 
@@ -127,7 +108,7 @@ Farm:NewToggle({
                             repeat 
                                 task.wait()
                                 local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
-                                hrp.CFrame = mob.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0)
+                                Tween(mob.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0))
                                 AttackNoCoolDown(mob)
                             until not _G.AutoLevel
                                 or not mob.Parent
@@ -839,6 +820,7 @@ function AttackNoCoolDown(v)
     end)
 
 end
+
 
 
 
