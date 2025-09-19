@@ -915,13 +915,6 @@ function GetEquippedTool()
 end
 
 function AttackNoCoolDown(v)
-    local v228 = {}
-    local v229 = game:GetService("Workspace").Enemies:GetChildren()
-    local v230 = FindEnemiesInRange(v228, v229)
-    if not v230 then
-        return
-    end
-
 local tool = GetEquippedTool()
 if not tool then return end
 
@@ -932,9 +925,9 @@ for _, v in ipairs(tool:GetChildren()) do
         pcall(function() v:InvokeServer() end)
     end
     task.wait(0.1)
+  end
 end
 
-end
 
 
 
