@@ -915,17 +915,7 @@ function GetEquippedTool()
 end
 
 function AttackNoCoolDown(v)
-local tool = GetEquippedTool()
-if not tool then return end
-
-for _, v in ipairs(tool:GetChildren()) do
-    if v:IsA("RemoteEvent") then
-        pcall(function() v:FireServer() end)
-    elseif v:IsA("RemoteFunction") then
-        pcall(function() v:InvokeServer() end)
-    end
-    task.wait(0.1)
-  end
+GetEquippedTool()
 end
 
 
