@@ -922,25 +922,20 @@ function AttackNoCoolDown(v)
         return
     end
 
-    local tool = GetEquippedTool()
-    if not tool then
-        return
+local tool = GetEquippedTool()
+if not tool then return end
+
+for _, v in ipairs(tool:GetChildren()) do
+    if v:IsA("RemoteEvent") then
+        pcall(function() v:FireServer() end)
+    elseif v:IsA("RemoteFunction") then
+        pcall(function() v:InvokeServer() end)
     end
-
-    pcall(function()
-        local modules = game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Net")
-        local RegisterAttack = modules:WaitForChild("RE/RegisterAttack")
-        local RegisterHit = modules:WaitForChild("RE/RegisterHit")
-
-        for _, child in pairs(tool:GetChildren()) do
-            if child:IsA("RemoteEvent") or child:IsA("RemoteFunction") then
-                RegisterAttack:FireServer(1e-9)
-                RegisterHit:FireServer(v230, v228)
-            end
-        end
-    end)
+    task.wait(0.1)
+end
 
 end
+
 
 
 
